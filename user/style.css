@@ -1,0 +1,63 @@
+input[type=range]{
+    -webkit-appearance: none!important;
+}
+#container{
+    width: 640px;
+    height: 471px;
+    position: static;
+}
+#customControl{
+    width: 640px;
+    position: static;
+}
+.smallBTN{
+    width: 20px;
+    height: 20px;
+}
+#seeksliderprog{
+    margin-left: 0px;
+    width: 100%;
+    position: static;
+    margin-bottom: 15px;
+}
+#seeksliderprog::-webkit-slider-runnable-track {
+    height: 10px;
+    background: #666666;
+    margin-bottom: 4px;
+}
+#seeksliderprog::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 26px;
+    width: 26px;
+    border-radius: 13px;
+    background: #CC0000;
+    margin-top: -8px;
+}
+#seekslider{
+    width: 100px;
+}
+
+#contall{
+    width: 100%;
+    height: 75px;
+    background-color: #666666;
+}
+
+#leftCON{
+    float: left;
+}
+#rightCON{
+    float: right;
+}
+#qualbox{
+    width: 65px;
+    background-color: wheat;
+}
+#cap{
+    height: 20px;
+    visibility: hidden;
+}
+#process{
+    color: #FFFFFF;
+}
