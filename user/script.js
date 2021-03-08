@@ -26,10 +26,10 @@ function onYouTubeIframeAPIReady() {
 
         playerVars: {
             rel: 0,
-            autoplay: 0,
+            autoplay: 1,
             controls: 0,
             disablekb: 1,
-            showinfo: 0,
+            showinfo: 1,
             modestbranding: 1,
             cc_load_policy: 1,
             enablejsapi: 1,
