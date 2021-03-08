@@ -31,7 +31,7 @@
 }
 	if (isMobile()) {
     // 모바일이면 실행될 코드 들어가는 곳
-setTimeout("location.href='https://gmidbroadcast.o-r.kr/user/m1view1mob.html'",1000);
+setTimeout("location.href='https://gmidbroadcast.o-r.kr/user/m카테고리IDview영상IDmob.html'",1000);
 } else {
     // 모바일이 아니면 실행될 코드 들어가는 곳
 }
