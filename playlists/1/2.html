@@ -165,58 +165,12 @@ function writeUserData() {
 
   if ($name.value.length === 0 || $score.value === 0) {
 
-    alert('이름과 댓글이 비어있습니다');
+    alert('이름이나 댓글이 비어있습니다');
 
     return;
 
   }
-  
-  if ($name.indexOf("관리자") != -1) {
-    
-    alert('권한이 부족하여 다음 단어를 이름에 사용할 수 없습니다: 관리자');
 
-    return; 
-    
-    
-}
-
-if ($name.indexOf("<") != -1) {
-    
-    alert('권한이 부족하여 이름에 HTML 코드를 사용할 수 없습니다');
-
-    return; 
-    
-    
-}
-  
-  
-if ($name.indexOf(">") != -1) {
-    
-    alert('권한이 부족하여 이름에 HTML 코드를 사용할 수 없습니다');
-
-    return; 
-    
-    
-}
-
-if ($score.indexOf("<") != -1) {
-    
-    alert('권한이 부족하여 댓글에 HTML 코드를 사용할 수 없습니다');
-
-    return; 
-    
-    
-}
-  
-  
-if ($score.indexOf(">") != -1) {
-    
-    alert('권한이 부족하여  HTML 코드를 사용할 수 없습니다');
-
-    return; 
-    
-    
-}
   
   // 저장
 
