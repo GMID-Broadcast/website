@@ -21,52 +21,54 @@
   <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
   
   
-  
+  <script language="Javascript" type="text/javascript">
+<!--
+ function setCookie( name, value, expirehours ) {
+  var todayDate = new Date();
+  todayDate.setHours( todayDate.getHours() + expirehours );
+  document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";"
+ }
+ function closeWin() {
+  if(document.getElementById("pop_today").checked){
+   setCookie( "ncookie", "done" , 24 );
+  }
+  document.getElementById('layer_pop').style.display = "none";
+ }
+-->
+</script>
   
 </head>
 <body>
-  <aside class="popup" id="popupWrap">
-  <div class="inner" id="popup_1">
-    <div class="area">
-      <p>Test</p>
-    </div>
-    <button type="button" onClick="PopupNoDisplay_1()"><span>하루동안 보지않기</span></button>
-    <button type="button" onClick="PopupHide();">[닫기]</button>
-  </div>
-
-    <script>
-      $(document).ready(function () {
-  $('.popup').show();
-  cookiedata = document.cookie;
-  if ( cookiedata.indexOf("popup_1=done") < 0 ){ //쿠키 변경 여부 불러오기
-  	document.all['popup_1'].style.visibility = "visible";
-  }
-  else {
-  	document.all['popup_1'].style.display = "none";
-  }
-  PopupBgDisplay();
-});
-
-function PopupNoDisplay_1() {
-  setCookie("popup_1", "done", 1); //쿠키값 변경
-  PopupHide();
-}
-
-function PopupHide() { //팝업창 지우기
-  $('#popup_1').hide();
-  PopupBgDisplay(); 
-}
-
-function PopupBgDisplay() {	//팝업창이 없어진 경우 배경(popupbg) 지우기
-  cookiedata1 = document.cookie;
-  if (cookiedata1.indexOf("popup_1=done") > 0)
-  {
-  	$("#popupWrap").hide();
-  }
-}
-    </script>
-    
-    
+  <!-- 공지 -->
+  <div class="layer_popup" style="position:absolute; width:500px;left:50%; margin-left:-480px; top:90px; z-index:1;" id="layer_pop">
+<table width="500" border="0" cellpadding="0" cellspacing="0">
+<tr>
+ <td><img src="images/popupimage.jpg" width="500" height="500" border="0" /></td>
+</tr>
+<tr>
+ <td align="center" height="30" bgcolor="#333333">
+ <table width="95%" border="0" cellpadding="0" cellspacing="0">
+ <tr>
+  <td align="left" class="pop"><input type="checkbox" name="pop_today" id="pop_today" />하루동안 보지 않기</td>
+  <td align="right" class="pop"><a href="javascript:closeWin();">닫기</a></td>
+ </tr>
+ </table></td>
+</tr>
+</table>
+<script language="Javascript" type="text/javascript">
+<!--
+ cookiedata = document.cookie;
+ if (cookiedata.indexOf("ncookie=done") < 0){
+  document.getElementById('layer_pop').style.display = "inline";
+ } else {
+  document.getElementById('layer_pop').style.display = "none";
+ }
+-->
+</script>
+</div>
+  
+  
+  
   <div class="popupbg" style="background:gray;"></div>
 </aside>
   
