@@ -1,205 +1,191 @@
-<!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<title>Quiz</title>
-	<style>
-		/*css reset */
-		html,body,div,span,h1,h2,h3,h4,h5,h6,p,code,small,strike,strong,sub,sup,b,u,i{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0;} 
-		article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;} 
-		body{line-height:1; font:normal 0.9em/1em "Helvetica Neue", Helvetica, Arial, sans-serif;} 
-		ol,ul{list-style:none;} 
-		#frame{max-width:620px;width:100%;border:1px solid #ccc;background:#eee;padding:10px;} 
-		#content{font:normal normal 1em/1.5em "Helvetica Neue", Helvetica, Arial, sans-serif;margin:0 40px 10px;} 
-		h1{font:normal bold 2em/1.8em "Helvetica Neue", Helvetica, Arial, sans-serif;text-align:left;background:#ccc;padding:0 15px;width:auto}
-		h2{font:italic bold 1.3em/1.2em "Helvetica Neue", Helvetica, Arial, sans-serif;padding:5px 15px 15px;} 
-		input[type=radio]{margin:0 10px 5px -22px;} label{margin:0 0 5px;}
-		#score p{font-size:0.95em; font-style:italic; color:#666; float:right;margin:5px 5px 0 0;}
-		#score:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0;}
-		#response{min-height:70px; margin:10px; }
-		#response h3{font:normal bold 1.2em/1.5em "Helvetica Neue", Helvetica, Arial, sans-serif; margin:5px 0;}
-	</style>
-	<script>
-	
-	  /**
-  	 * Set the information about your questions here. The correct answer string needs to match
-  	 * the correct choice exactly, as it does string matching. (case sensitive)
-  	 *
-  	 */
-		var quiz = [
-			{
-				"question"		: 	"Q1: Who came up with theory of relativity?",
-				"choices"		: 	[
-										"Sir Isaac Newton",
-										"Nicolaus Copernicus",
-										"Albert Einstein",
-										"Ralph Waldo Emmerson"
-									],
-				"correct"		: 	"Albert Einstein",
-				"explanation"	: 	"Albert Einstein drafted the special theory of relativity in 1905.",
-				
-			},
-			{
-				"question"		: 	"Q2: Who is on the two dollar bill?",
-				"choices"		: 	[
-										"Thomas Jefferson",
-										"Dwight D. Eisenhower",
-										"Benjamin Franklin",
-										"Abraham Lincoln"
-									],
-				"correct"		: 	"Thomas Jefferson",
-				"explanation"	: 	"The two dollar bill is seldom seen in circulation. As a result, some businesses are confused when presented with the note.",
-			},
-			{
-				"question"		: 	"Q3: What event began on April 12, 1861?",
-				"choices"		: 	[
-										"First manned flight",
-										"California became a state",
-										"American Civil War began",
-										"Declaration of Independence"
-									],
-				"correct"		: 	"American Civil War began",
-				"explanation"	: 	"South Carolina came under attack when Confederate soldiers attacked Fort Sumter. The war lasted until April 9th 1865.",
-			},
-	
-		];
-		
-		var currentQuestion = 0;
-		var score = 0;
-		var askingQuestion = true;
-		
-		function loadQuestion(){
-			
-			//set temporary variable for creating radio buttons
-			var radioButton;
-			
-			//clear out radio buttons from previous question
-			document.getElementById('content').innerHTML = "";
-			
-			//loop through choices, and create radio buttons
-			for(var i=0; i < quiz[currentQuestion]["choices"].length; i++){
-				
-				radioButton  = document.createElement('input');
-				radioButton.type = 'radio';
-				radioButton.name = 'quiz';
-				radioButton.id = 'choice'+ (i+1);
-				radioButton.value = quiz[currentQuestion]["choices"][i];
-				
-				//create label tag, which hold the actual text of the choices
-				var label = document.createElement('label');
-				label.setAttribute('for','choice'+ (i+1));
-				label.innerHTML = quiz[currentQuestion]["choices"][i];
-				
-				//create a <br> tag to separate options
-				var br = document.createElement('br');
-				
-				//attach them to content. Attach br tag, then label, then radio button
-				document.getElementById('content').insertBefore(br);
-				document.getElementById('content').insertBefore(label, br);
-				document.getElementById('content').insertBefore(radioButton, label);
-			}
-			
-			//load the question
-			document.getElementById('question').innerHTML = quiz[currentQuestion]["question"];
-			
-			//setup score for first time
-			if(currentQuestion == 0){
-				document.getElementById('score').innerHTML = '<p>점수: '+ quiz.length +' 문제 중 ' + score +' 개 정답</p>';
-			}
-		}
-		
-		function checkAnswer(){
-			
-			//are we asking a question, or proceeding to next question?
-			if(askingQuestion){
-				
-				//change button text to next question, so next time they click it, it goes to next question
-				document.getElementById('check').innerHTML = '다음 문제';
-				askingQuestion = false;
-				
-				//determine which radio button they clicked
-				var userpick;
-				var correctIndex;
-				var radios = document.getElementsByName('quiz');
-				for(var i=0; i < radios.length; i++){
-					if(radios[i].checked){ //if this radio button is checked
-						userpick = radios[i].value;
-					}
-					//get index of correct answer
-					if(radios[i].value == quiz[currentQuestion]["correct"]){
-						correctIndex = i;
-					}
-				}
-				
-				//set the color if they got it right, or wrong
-				if(userpick == quiz[currentQuestion]["correct"]){
-					score++;
-					document.getElementsByTagName('label')[correctIndex].style.color = "green";
-					document.getElementsByTagName('label')[correctIndex].style.fontWeight = "bold";
-					document.getElementById('explanation').innerHTML = "<h3>정답입니다!</h3>";
-				} else {
-					document.getElementsByTagName('label')[correctIndex].style.color = "red";
-					document.getElementsByTagName('label')[correctIndex].style.fontWeight = "bold";
-					document.getElementById('explanation').innerHTML = "<h3>오답입니다!</h3>";
-				}
-				
-				document.getElementById('explanation').innerHTML += '<p>' + quiz[currentQuestion]["explanation"] + '</p>';
-				document.getElementById('score').innerHTML = '<p>점수: '+ quiz.length +' 문제 중 ' + score +' 개 정답</p>';
-				
-				
-			} else { //reset form and move to next question
+  <head>
+        <title>방송부 퀴즈</title>
+    <style>
+      body {
+   font-size: 18px;
+}
 
-				//setting up so user can ask a question
-				askingQuestion = true;
-				
-				//change button text back to 'submit answer'
-				document.getElementById('check').innerHTML = '확인';
-				
-				document.getElementById('explanation').innerHTML = "";
-				
-				//if we're not on last question, increase question number
-				if(currentQuestion < quiz.length - 1){
-					currentQuestion++;
-					loadQuestion();
-				} else {
-					showFinalResults();
-				}
+.grid {
+   padding: 10px 50px 30px;
+   margin: 50px auto;
+   width: 600px;
+   background: #fff;
+   border: 2px solid #eed0dc;
+   border-radius: 20px;
+   box-shadow: 5px 5px 5px #cbcbcb;
+}
 
-			}
-		}
-		
-		function showFinalResults(){
-			
-			document.getElementById('content').innerHTML = '<h2>퀴즈 종료</h2>';
-			document.getElementById('content').innerHTML += '<p>결과:</p>';
-			document.getElementById('content').innerHTML += '<h2>' + quiz.length + ' 문제 중 ' + score + ' 개 정답. 정답률: ' + Math.round(score/quiz.length * 100) + '%</h2>';
-			
-			//delete the button
-			var button = document.getElementById('check');
-			button.parentNode.removeChild(button); //js requires you to delete elements from the parent
-			
-			//remove question
-			document.getElementById('question').innerHTML = "";
-			
-		}
-		
-	
-		window.onload = loadQuestion;
-	
-	</script>
-	
-</head>
-<body>
-	<div id="frame">
-		<h1>시청각실 실습문제</h1>
-		<div id="score"><p>점수: //점수</p></div>
-		<h2 id="question">//문제</h2>
-		<div id="content">
+.grid h1 {
+   color: #333;
+   font-size: 2.4em;
+   text-align: center;
+   ;
+}
 
-		</div>
-		<button id="check" onclick="checkAnswer()">확인</button>
-		<div id="response">
-			<div id="explanation"></div>
-		</div>
-	</div>
-</body>
+#question {
+   padding: 10px 2em;
+   background: salmon;
+   border-radius: 15px;
+   font-size: 24px;
+   color: #fff;
+}
+
+#quiz {
+   text-align: center;
+}
+
+#progress {
+   font-size: 20px;
+   color: #2b2b2b;
+}
+
+.buttons {
+   padding: 30px 20px;
+   border: 2px solid #eed0dc;
+   border-radius: 20px;
+}
+
+.btn {
+   margin: 10px 40px 20px 0;
+   padding: 10px;
+   width: 250px;
+   font-size: 16px;
+   color: #333;
+   background: #eed0dc;
+   border: 1px solid #ffe3ed;
+   border-radius: 15px;
+   cursor: pointer;
+   transition: all .2s;
+}
+
+.btn:nth-child(2n) {
+   margin-right: 0;
+}
+
+.btn:hover {
+   background: #c34c74;
+   color: #fff;
+}
+
+    </style>
+  </head>
+  <body>
+    <div class="grid">
+   <h1>방송부 퀴즈</h1>
+   <div id="quiz">
+      <p id="question"></p>
+
+      <div class="buttons">
+         <button class="btn"></button>
+         <button class="btn"></button>
+         <button class="btn"></button>
+         <button class="btn"></button>
+      </div>
+
+      <footer>
+         <p id="progress">진행 정보</p>
+      </footer>
+   </div>
+</div>
+    <script>
+      // 문제 객체(생성자 함수)
+function Question(text, choice, answer) {
+   this.text = text; // 질문 텍스트
+   this.choice = choice; // 선택할 답들(배열)
+   this.answer = answer; // 정답 정보
+}
+
+// 퀴즈 정보 객체
+function Quiz(questions) {
+   this.score = 0; // 점수
+   this.questions = questions; // 문제
+   this.questionIndex = 0; // 문제 번호
+}
+
+// 정답 확인 메서드
+Quiz.prototype.correctAnswer = function(answer) {
+   return answer == this.questions[this.questionIndex].answer;
+}
+
+var questions = [
+   new Question('【1번】', ['정답', '오답1', '오답2', '오답3'], '정답'),
+];
+
+// 퀴즈 객체 생성
+var quiz = new Quiz(questions);
+
+// 문제 출력 함수
+function updateQuiz() {
+   var question = document.getElementById('question');
+   var idx = quiz.questionIndex + 1;
+   var choice = document.querySelectorAll('.btn');
+
+   // 문제 출력
+   question.innerHTML = '문제' + idx + ') ' + quiz.questions[quiz.questionIndex].text;
+
+   // 선택 출력
+   for (var i = 0; i < 4; i++) {
+      choice[i].innerHTML = quiz.questions[quiz.questionIndex].choice[i];
+   }
+
+   progress();
+}
+
+function progress() {
+   var progress = document.getElementById('progress');
+   progress.innerHTML = '문제 ' + (quiz.questionIndex + 1) + '/ ' + quiz.questions.length;
+}
+
+var btn = document.querySelectorAll('.btn');
+
+// 입력 및 정답 확인 함수
+function checkAnswer(i) {
+   btn[i].addEventListener('click', function() {
+      var answer = btn[i].innerText;
+
+      if (quiz.correctAnswer(answer)) {
+         alert('정답입니다!');
+         quiz.score++;
+      } else {
+         alert('틀렸습니다!');
+      }
+
+      if (quiz.questionIndex < quiz.questions.length - 1) {
+         quiz.questionIndex++;
+         updateQuiz();
+      } else {
+         result();
+      }
+   });
+}
+
+function result() {
+   var quizDiv = document.getElementById('quiz');
+   var per = parseInt((quiz.score * 100) / quiz.questions.length);
+   var txt = '<h1>결과</h1>' + '<h2 id="score">당신의 점수: ' + quiz.score + '/' + quiz.questions.length + '<br><br>' + per + '점' + '</h2>';
+
+   quizDiv.innerHTML = txt;
+
+   // 점수별 결과 텍스트
+   if (per < 60) {
+      txt += '<h2>더 분발하세요</h2>';
+      quizDiv.innerHTML = txt;
+   } else if (per >= 60 && per < 80) {
+      txt += '<h2>무난한 점수네요</h2>'
+      quizDiv.innerHTML = txt;
+   } else if (per >= 80) {
+      txt += '<h2>훌륭합니다</h2>'
+      quizDiv.innerHTML = txt;
+   }
+}
+
+for (var i = 0; i < btn.length; i++) {
+   checkAnswer(i);
+}
+
+updateQuiz();
+
+    </script>
+  </body>
+    </html>
