@@ -72,7 +72,7 @@
   </head>
   <body>
     <div class="grid">
-   <h1>시청각실 조명위치</h1>
+   <h1>방송부 퀴즈</h1>
    <div id="quiz">
       <p id="question"></p>
 
@@ -109,8 +109,10 @@ Quiz.prototype.correctAnswer = function(answer) {
 }
 
 var questions = [
-   new Question('시청각실 무대 옆에 있는 스위치의 아래쪽은 어느 역할을 하나요?', ['무대의 둥근 전등 제어', '무대의 직사각형 전등 제어', '빔 프로젝터 제어', '무대'], '무대의 직사각형 전등 제어'),
-   new Question('시청각실 무대 옆에 있는 스위치의 위쪽은 어느 역할을 하나요?', ['무대의 둥근 전등 제어', '무대의 직사각형 전등 제어', '빔 프로젝터 제어', '무대'], '무대의 둥근 전등 제어'),
+   new Question('시청각실 무대 옆에 있는 스위치의 아래쪽은 어느 역할을 하나요?', ['무대의 둥근 전등 제어', '무대의 직사각형 전등 제어', '좌석의 둥근 전등 제어', '좌석의 직사각형 전등 제어'], '무대의 직사각형 전등 제어'),
+   new Question('시청각실 무대 옆에 있는 스위치의 위쪽은 어느 역할을 하나요?', ['무대의 둥근 전등 제어', '무대의 직사각형 전등 제어', '좌석의 둥근 전등 제어', '좌석의 직사각형 전등 제어'], '무대의 둥근 전등 제어'),
+   new Question('시청각실 좌석 옆에 있는 오른쪽 스위치는 어느 역할을 하나요?', ['무대의 둥근 전등 제어', '무대의 직사각형 전등 제어', '좌석의 둥근 전등 제어', '좌석의 직사각형 전등 제어'], '좌석의 직사각형 전등 제어'),
+   new Question('시청각실 좌석 옆에 있는 왼쪽 스위치는 어느 역할을 하나요?', ['무대의 둥근 전등 제어', '무대의 직사각형 전등 제어', '좌석의 둥근 전등 제어', '좌석의 직사각형 전등 제어'], '좌석의 둥근 전등 제어'),
 ];
 
 // 퀴즈 객체 생성
@@ -164,7 +166,7 @@ function checkAnswer(i) {
 function result() {
    var quizDiv = document.getElementById('quiz');
    var per = parseInt((quiz.score * 100) / quiz.questions.length);
-   var txt = '<h1>결과</h1>' + '<h2 id="score">당신의 점수: ' + quiz.score + '/' + quiz.questions.length + '<br><br>' + per + '점' + '</h2><br><button type="button" onclick="location.href='index.html' ">메뉴로 돌아가기</button>';
+   var txt = '<h1>결과</h1>' + '<h2 id="score">당신의 점수: ' + quiz.score + '/' + quiz.questions.length + '<br><br>' + per + '점' + '</h2>';
 
    quizDiv.innerHTML = txt;
 
