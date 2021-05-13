@@ -1,0 +1,191 @@
+<html>
+  <head>
+        <title>방송부 퀴즈</title>
+    <style>
+      body {
+   font-size: 18px;
+}
+
+.grid {
+   padding: 10px 50px 30px;
+   margin: 50px auto;
+   width: 600px;
+   background: #fff;
+   border: 2px solid #eed0dc;
+   border-radius: 20px;
+   box-shadow: 5px 5px 5px #cbcbcb;
+}
+
+.grid h1 {
+   color: #333;
+   font-size: 2.4em;
+   text-align: center;
+   ;
+}
+
+#question {
+   padding: 10px 2em;
+   background: salmon;
+   border-radius: 15px;
+   font-size: 24px;
+   color: #fff;
+}
+
+#quiz {
+   text-align: center;
+}
+
+#progress {
+   font-size: 20px;
+   color: #2b2b2b;
+}
+
+.buttons {
+   padding: 30px 20px;
+   border: 2px solid #eed0dc;
+   border-radius: 20px;
+}
+
+.btn {
+   margin: 10px 40px 20px 0;
+   padding: 10px;
+   width: 250px;
+   font-size: 16px;
+   color: #333;
+   background: #eed0dc;
+   border: 1px solid #ffe3ed;
+   border-radius: 15px;
+   cursor: pointer;
+   transition: all .2s;
+}
+
+.btn:nth-child(2n) {
+   margin-right: 0;
+}
+
+.btn:hover {
+   background: #c34c74;
+   color: #fff;
+}
+
+    </style>
+  </head>
+  <body>
+    <div class="grid">
+      <h1>시청각실 유선마이크 연결 및 해제</h1>
+   <div id="quiz">
+      <p id="question"></p>
+
+      <div class="buttons">
+         <button class="btn"></button>
+         <button class="btn"></button>
+         <button class="btn"></button>
+         <button class="btn"></button>
+      </div>
+
+      <footer>
+         <p id="progress">진행 정보</p>
+      </footer>
+   </div>
+</div>
+    <script>
+      // 문제 객체(생성자 함수)
+function Question(text, choice, answer) {
+   this.text = text; // 질문 텍스트
+   this.choice = choice; // 선택할 답들(배열)
+   this.answer = answer; // 정답 정보
+}
+
+// 퀴즈 정보 객체
+function Quiz(questions) {
+   this.score = 0; // 점수
+   this.questions = questions; // 문제
+   this.questionIndex = 0; // 문제 번호
+}
+
+// 정답 확인 메서드
+Quiz.prototype.correctAnswer = function(answer) {
+   return answer == this.questions[this.questionIndex].answer;
+}
+
+var questions = [
+   new Question('다음은 마이크를 연결하는 방법을 나타낸 것이다.<br>ⓐ 금색 뚜껑을 연다', ['무대의 둥근 전등 제어', '무대의 직사각형 전등 제어', '좌석의 둥근 전등 제어', '좌석의 직사각형 전등 제어'], '무대의 직사각형 전등 제어'),
+  ];
+
+// 퀴즈 객체 생성
+var quiz = new Quiz(questions);
+
+// 문제 출력 함수
+function updateQuiz() {
+   var question = document.getElementById('question');
+   var idx = quiz.questionIndex + 1;
+   var choice = document.querySelectorAll('.btn');
+
+   // 문제 출력
+   question.innerHTML = '【' + idx + '번】 ' + quiz.questions[quiz.questionIndex].text;
+
+   // 선택 출력
+   for (var i = 0; i < 4; i++) {
+      choice[i].innerHTML = quiz.questions[quiz.questionIndex].choice[i];
+   }
+
+   progress();
+}
+
+function progress() {
+   var progress = document.getElementById('progress');
+   progress.innerHTML = '문제 ' + (quiz.questionIndex + 1) + '/ ' + quiz.questions.length;
+}
+
+var btn = document.querySelectorAll('.btn');
+
+// 입력 및 정답 확인 함수
+function checkAnswer(i) {
+   btn[i].addEventListener('click', function() {
+      var answer = btn[i].innerText;
+
+      if (quiz.correctAnswer(answer)) {
+         alert('정답입니다!');
+         quiz.score++;
+      } else {
+         alert('틀렸습니다!');
+      }
+
+      if (quiz.questionIndex < quiz.questions.length - 1) {
+         quiz.questionIndex++;
+         updateQuiz();
+      } else {
+         result();
+      }
+   });
+}
+
+function result() {
+   var quizDiv = document.getElementById('quiz');
+   var per = parseInt((quiz.score * 100) / quiz.questions.length);
+   var txt = '<h1>결과</h1>' + '<h2 id="score">당신의 점수: ' + quiz.score + '/' + quiz.questions.length + '<br><br>' + per + '점' + '</h2>';
+
+   quizDiv.innerHTML = txt;
+
+   // 점수별 결과 텍스트
+   if (per < 60) {
+      txt += '<h2>더 분발하세요</h2>';
+      quizDiv.innerHTML = txt;
+   } else if (per >= 60 && per < 80) {
+      txt += '<h2>무난한 점수네요</h2>'
+      quizDiv.innerHTML = txt;
+   } else if (per >= 80) {
+      txt += '<h2>훌륭합니다</h2>'
+      quizDiv.innerHTML = txt;
+   }
+}
+
+for (var i = 0; i < btn.length; i++) {
+   checkAnswer(i);
+}
+
+updateQuiz();
+
+    </script>
+  </body>
+    </html>
