@@ -36,7 +36,14 @@
  }
 -->
 </script>
-  
+      <script>
+        let filter = "win16|win32|win64|mac|macintel";
+        if(0 > filter.indexOf(navigator.platform.toLowerCase())){
+            alert('현재 접속중인 기기로는 퀴즈를 풀때 불편함을 느낄 수 있습니다. 정상작동하긴 하지만 PC로 퀴즈를 푸시는 것을 추천합니다');
+        }else{
+
+        }
+    </script>
 </head>
 <body>
   <!-- 공지
