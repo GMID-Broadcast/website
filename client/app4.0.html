@@ -1,5 +1,6 @@
 <html>
 <head>
+<script src="https://www.gstatic.com/firebasejs/3.6.5/firebase.js"></script>
 	<title></title>
 </head>
 <body data-gr-ext-installed="" data-new-gr-c-s-check-loaded="14.1012.0">
@@ -12,5 +13,9 @@
 <p style="text-align: center;">&nbsp;</p>
 
 <p style="text-align: center;"><strong><span style="color:#FF8C00;">최신버전입니다. 아직 업데이트할 필요가 없습니다 </span><img alt="smiley" height="23" src="https://www.html.am/html-editors/ckeditor/ckeditor_4.4.1_full/plugins/smiley/images/regular_smile.png" title="smiley" width="23" /></strong></p>
+<br>
+<h3 style="text-align: center;">의견 나누기</h3>
+<div class="controls"> <input type="text" id="name" placeholder="이름"> <input type="text" id="score" placeholder="댓글"> <a class="btn btn-primary display-4" onclick="writeUserData()" id="save">등록</a> </div><br><br> <div id="loading">댓글을 불러오고 있습니다. 잠시만 기다려주세요</div><div id="outputpv" style="border: 1px blue;"><span style="color: green;"><strong>이정윤<span class="marker"><b>[📌]</b></span></strong></span><span style="color: black;"> 》 댓글에 의견을 남겨주시기 바랍니다<br></span><span style="color: green;"><strong>이정윤<span class="marker"><b>[📌]</b></span></strong></span><span style="color: black;"> 》 의견을 남겨주시면 빠르게 답변하도록 하겠습니다<br></span></div> <div id="output" style="border: 1px blue;"></div> <script> // 파베설정 var config = { apiKey: "AIzaSyBuxkZOBls1MokQPy4h49KKGv1hJ3UYVpI", databaseURL: "https://test-f5423.firebaseio.com/", projectId: "test-f5423" }; firebase.initializeApp(config); firebase.database.INTERNAL.forceWebSockets(); var database = firebase.database(); // init elements var $name, $scope, $output, id, $preloader; $name = document.getElementById('name'); $score = document.getElementById('score'); $output = document.getElementById('output'); $preloader = document.getElementById('loading'); getUserData(); setInterval(getUserData, 1000); function writeUserData() { // 데이터베이스 ID 설정(채팅 고유 ID) id = Date.now(); if ($name.value.length === 0 || $score.value === 0) { alert('이름이나 댓글이 비어있습니다'); return; } // 저장 database.ref('event/eventchat/' + id.toString()).set({ username: $name.value, score: $score.value }); $score.value = ''; getUserData(); } function getUserData() { database.ref('event/eventchat/').once('value').then(function(snapshot) { $preloader.style.display = 'none'; var data = snapshot.val(); // clear output $output.innerHTML = ''; for (var property in data) { // get object with name and score var objectWithData = data[property + '']; // get name var name = objectWithData['username'];
+
 </body>
 </html>
