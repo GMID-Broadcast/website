@@ -1,0 +1,15 @@
+<html>
+  <head>
+            <script>
+        let filter = "win16|win32|win64|mac|macintel";
+        if(0 > filter.indexOf(navigator.platform.toLowerCase())){
+          alert('안드로이드 기기에서는 앱을 설치하여 사용하는 것을 추천합니다');
+           window.location.href = 'https://gmidbroadcast.o-r.kr/user/client';       
+        }else{
+      window.location.href = 'https://gmidbroadcast.o-r.kr/user';
+        }
+    </script>
+  </head>
+<body>
+  </body>
+</html>
